@@ -9,6 +9,9 @@ on:
 jobs:
   Lambda-CI:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./terraform
 
     services:
       floci:
@@ -47,7 +50,6 @@ jobs:
 
       - name: Terraform Init
         run: terraform init
-        working-directory: ./terraform
         env:
           AWS_ACCESS_KEY_ID: test
           AWS_SECRET_ACCESS_KEY: test
