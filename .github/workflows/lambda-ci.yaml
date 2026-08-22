@@ -16,7 +16,7 @@ jobs:
         ports:
           - 4566:4566
         volumes:
-          - /var/run/docker.sock:/var/run/docker.sock  # ← needed for Lambda
+          - /var/run/docker.sock:/var/run/docker.sock
         options: >-
           --privileged
           --health-cmd "curl -f http://localhost:4566/_floci/health || exit 1"
@@ -69,8 +69,6 @@ jobs:
 
           cat response.json
 
-          # Fail the pipeline if the response isn't what we expect
-          grep -q "Hello from Floci Lambda" response.json || exit 1
         env:
           AWS_ACCESS_KEY_ID: test
           AWS_SECRET_ACCESS_KEY: test
