@@ -5,3 +5,25 @@ services:
       - "4566:4566"
     volumes:
       - ./data:/app/data
+
+  floci-api:
+    image: floci/floci-ui:latest
+    ports:
+      - "4501:4501"
+    environment:
+      - FLOCI_ENDPOINT=http://floci:4566
+      - AWS_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - PORT=4501
+    depends_on:
+      - floci
+  
+  floci-ui:
+    image: floci/floci-ui:latest
+    ports:
+      - "4500:4500"
+    environment:
+      - VITE_API_URL=http://localhost:4501
+    depends_on:
+      - floci-api
