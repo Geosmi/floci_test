@@ -65,7 +65,7 @@ jobs:
       - name: Invoke Lambda and check response
         run: |
           aws lambda invoke \
-            --function-name my-function \
+            --function-name test-lambda \
             --endpoint-url http://localhost:4566 \
             --payload '{"key": "value"}' \
             response.json
