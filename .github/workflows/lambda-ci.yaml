@@ -74,6 +74,8 @@ jobs:
           aws lambda invoke \
             --function-name test-lambda \
             --endpoint-url http://localhost:4566 \
+            --payload '{}' \
+            response.json
 
           cat response.json
 
