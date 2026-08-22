@@ -18,7 +18,7 @@ resource "aws_iam_role" "lambda_role" {
 }
 
 resource "aws_lambda_function" "test_lambda" {
-  filename         = "handler.zip"
+  filename         = "../src/lambda/test_lambda/handler.zip"
   function_name    = "test-lambda"
   role             = aws_iam_role.lambda_role.arn
   handler          = "handler.lambda_handler"
