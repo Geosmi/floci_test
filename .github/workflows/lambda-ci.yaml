@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  terraform:
+  Lambda-CI:
     runs-on: ubuntu-latest
 
     services:
@@ -47,6 +47,7 @@ jobs:
 
       - name: Terraform Init
         run: terraform init
+        working-directory: ./terraform
         env:
           AWS_ACCESS_KEY_ID: test
           AWS_SECRET_ACCESS_KEY: test
