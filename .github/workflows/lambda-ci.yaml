@@ -1,4 +1,4 @@
-name: Terraform + Lambda CI
+name: Lambda CI
 
 on:
   push:
