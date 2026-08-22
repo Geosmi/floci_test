@@ -13,7 +13,18 @@ resource "aws_iam_role" "lambda_role" {
       Action    = "sts:AssumeRole"
       Effect    = "Allow"
       Principal = { Service = "lambda.amazonaws.com" }
-    }]
+    },
+    {
+      Action    = "dynamodb:BatchWriteItem"
+      Effect    = "Allow"
+      Principal = { Service = "lambda.amazonaws.com" }
+    },
+    {
+      Action    = "dynamodb:PutItem"
+      Effect    = "Allow"
+      Principal = { Service = "lambda.amazonaws.com" }
+    }
+    ]
   })
 }
 
