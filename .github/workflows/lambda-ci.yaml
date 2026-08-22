@@ -55,6 +55,13 @@ jobs:
           AWS_SECRET_ACCESS_KEY: test
           AWS_DEFAULT_REGION: us-east-1
 
+      - name: Terraform Plan
+        run: terraform plan
+        env:
+          AWS_ACCESS_KEY_ID: test
+          AWS_SECRET_ACCESS_KEY: test
+          AWS_DEFAULT_REGION: us-east-1
+
       - name: Terraform Apply
         run: terraform apply -auto-approve
         env:
@@ -67,8 +74,6 @@ jobs:
           aws lambda invoke \
             --function-name test-lambda \
             --endpoint-url http://localhost:4566 \
-            --payload '{"key": "value"}' \
-            response.json
 
           cat response.json
 
