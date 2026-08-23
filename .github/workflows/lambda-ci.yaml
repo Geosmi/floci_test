@@ -70,7 +70,7 @@ jobs:
         working-directory: .
         run: |
           aws s3 cp ./input.txt s3://test-bucket/input.txt \
-            --endpoint-url hhtp://localhost:4566
+            --endpoint-url http://localhost:4566
         env:
           AWS_ACCESS_KEY_ID: test
           AWS_SECRET_ACCESS_KEY: test
