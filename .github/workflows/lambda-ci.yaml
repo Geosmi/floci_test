@@ -66,16 +66,48 @@ jobs:
           AWS_SECRET_ACCESS_KEY: test
           AWS_DEFAULT_REGION: us-east-1
 
-      - name: Invoke Lambda and check response
+      - name: Upload file to S3
+        working-directory: .
         run: |
-          aws lambda invoke \
-            --function-name test-lambda \
+          aws s3 cp ./input.txt s3://test-bucket/input.txt \
+            --endpoint-url hhtp://localhost:4566
+        env:
+          AWS_ACCESS_KEY_ID: test
+          AWS_SECRET_ACCESS_KEY: test
+          AWS_DEFAULT_REGION: us-east-1
+      
+      - name: Verify upload
+        working-directory: .
+        run: |
+          aws s3 ls s3://test-bucket/ \
+            --endpoint-url http://localhost:4566
+        env:
+          AWS_ACCESS_KEY_ID: test
+          AWS_SECRET_ACCESS_KEY: test
+          AWS_DEFAULT_REGION: us-east-1
+
+      - name: Get Lambda logs
+        working-directory: .
+        run: |
+          sleep 3
+
+          LOG_STREAM=$(aws logs describe-log-streams \
+            --log-group-name /aws/lambda/test-lambda \
             --endpoint-url http://localhost:4566 \
-            --payload '{}' \
-            response.json
+            --order-by LastEventTime \
+            --descending \
+            --query 'logStreams[0].logStreamName' \
+            --output text)
 
-          cat response.json
+          echo "Log stream: $LOG_STREAM"
 
+          # Get the actual log events
+          aws logs get-log-events \
+            --log-group-name /aws/lambda/test-lambda \
+            --log-stream-name "$LOG_STREAM" \
+            --endpoint-url http://localhost:4566 \
+            --query 'events[*].message' \
+            --output text
         env:
           AWS_ACCESS_KEY_ID: test
           AWS_SECRET_ACCESS_KEY: test
