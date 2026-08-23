@@ -86,10 +86,13 @@ jobs:
           AWS_SECRET_ACCESS_KEY: test
           AWS_DEFAULT_REGION: us-east-1
 
+      - name: Check Floci container logs
+        run: docker logs $(docker ps -q --filter ancestor=floci/floci:latest)
+
       - name: Get Lambda logs
         working-directory: .
         run: |
-          sleep 3
+          sleep 15
 
           LOG_STREAM=$(aws logs describe-log-streams \
             --log-group-name /aws/lambda/test-lambda \
